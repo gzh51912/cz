@@ -1,0 +1,22 @@
+.title-bar{
+    background: #1d1d1d;
+    background-image: linear-gradient(#1d1d1d,#181818);
+    height: 50px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 199;
+    h1{
+      color: #fff;
+    font-size: 18px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 60px;
+    right: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    }
+}

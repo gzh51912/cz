@@ -1,0 +1,109 @@
+.big{
+    
+    display: flex;
+    flex-direction: column;
+    .content{
+        width: 100%;
+        color: #000000;
+        padding: 14.5833px 12.5px 2.08333px;
+        background: #e5e5e5;
+        background-size: 72px;
+        box-sizing: border-box;
+        margin-top: 50px;
+        margin-bottom: 56.25px;
+        .box-userinfo{
+            i{
+                display: inline-block;
+                width: 4.8px;
+                height: 8px;
+                position: absolute;
+                right: 9.6px;
+            }
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+            height:86.45px;
+            line-height: 86.45px;
+            padding-left: 69.6px;
+            margin-bottom: 0;
+            border-bottom: 0;
+            border-radius: 6.4px 6.4px 0 0;
+            font-size: 17.7083px;
+            color: #333;
+            box-shadow: none;
+           .avatar{
+            position: absolute;
+            left: 14.4px;
+            top: 50%;
+            width: 42.56px;
+            height: 42.56px;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            img{
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+           }
+          
+        }
+        .menu-list-parallel{
+            border-radius: 0 0 6.4px 6.4px;
+            position: relative;
+        overflow: hidden;
+        
+        background: #fff;
+        margin-bottom: 11.2px;
+        box-shadow: 0 1px 2px rgba(0,0,0,.1), 0 18px 20px -10px rgba(0,0,0,.03), 0 18px 20px -10px rgba(0,0,0,.03), 0 10px 20px -10px rgba(0,0,0,.03);
+        li{
+            float: left;
+            width: 25%;
+            height:63.28px;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+    border-right: .01px solid #e5e5e5;
+            font-size: 10.4167px;
+            box-sizing: border-box;
+            a{
+                i{
+                    width: 25px;
+                    height: 25px;
+                }
+        flex-direction: column;
+       width: 100%;
+       height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+            }
+        
+       
+        }
+        }
+        .menu-list-vertical{
+            width: 100%;
+            background: #ffffff;
+            border-radius: 6.4px;
+            margin-bottom: 11.2px;
+           li{
+           line-height: 62.5px;
+         
+           a{
+               display: block;
+               font-size: 17.7083px;
+               color: #333333;
+               background-color: transparent;
+               padding-left: 0;
+        text-indent: 14.88px;
+        i{
+            float: right;
+          margin-right: 4px;
+        }
+           }
+           }
+        }
+    }
+    
+}
+

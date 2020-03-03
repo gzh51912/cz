@@ -1,0 +1,49 @@
+.empty-container{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-size: 100%;
+    background: #ededed;
+    .container{
+   text-align: center;
+ position: absolute;
+ left: 0;
+ right: 0;
+ top: 50%;
+ -webkit-transform: translateY(-50%);
+ transform: translateY(-50%);
+ h3{
+   color: rgba(0,0,0,.15);
+ margin: 25px 0 9px;
+ font-size: 20.8333px;
+ }
+ p{
+   font-size: 13.5417px;
+   color: rgba(0,0,0,.15);
+ }
+ .buy-btn {
+   font-size: 12.5px;
+   margin: 16px 1px 0;
+
+  
+ border-radius: 6px;
+ text-shadow: 0 -1px 0 rgba(0,0,0,.15); 
+  box-shadow: inset 0 -1px 1px rgba(0,0,0,.2), 0 0 1px rgba(0,0,0,.1), 0 1px 3px rgba(0,0,0,.2);
+ display: inline-block;
+ width: 142px;
+ height: 40px;
+ line-height: 40px;
+ font-weight: 700;
+
+ }
+ .login{   color: #ffffff;font-size: 12.5px;
+   background: linear-gradient(#6f94e8,#5178df);
+ }
+ .box-border{
+   color: rgba(0,0,0,.6);background: linear-gradient(rgba(0,0,0,.01),hsla(0,0%,100%,.01));
+   
+ }
+ }
+    }
