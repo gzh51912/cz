@@ -37,7 +37,7 @@ export default class User extends Component {
                 <div className="content">
                     <div className="box-userinfo ">
                         <div className="avatar">
-                            <img src="https://static.smartisanos.cn/account/asset/img/default-user-avatar.png" />
+                            <img src="https://static.smartisanos.cn/account/asset/img/default-user-avatar.png" alt="" />
                         </div> 登录/注册 <i>></i></div>
                     <ul className=" menu-list-parallel ">
                         {
@@ -54,7 +54,7 @@ export default class User extends Component {
                             return <ul className=" menu-list-vertical" key={item}>
                                 {item.map((item) => {
                                     return <li className
-                                        ="arrow-right-icon" key={item}> <a >{item} <i>></i></a> </li>
+                                        ="arrow-right-icon" key={item}> <a href="#">{item} <i>></i></a> </li>
                                 })}
                             </ul>
                         })

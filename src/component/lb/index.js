@@ -26,12 +26,15 @@ export default class Lb extends Component {
         })
     }
     render() {
+        console.log(this.props.lb);
+        let { lb } = this.state;
         return (
             <div className="swiper-container">
                 <div className="swiper-wrapper">
+                    {/* 主页的轮播图是[{}],详情页的轮播图是["",""] */}
                     {
-                        this.state.lb.map((item, index) => {
-                            return <div className="swiper-slide" key={index}><img src={item.image} alt="" /></div>
+                        lb.map((item, index) => {
+                            return <div className="swiper-slide" key={index}><img src={item.image ? item.image : item} alt="" /></div>
                         })
                     }
                 </div>

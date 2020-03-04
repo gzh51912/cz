@@ -1,0 +1,69 @@
+.overview-content{
+    margin-top: 50px;
+    .box-line {
+        position: relative;
+        box-sizing: border-box;
+    width: 100%;
+    padding: 12.5px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    font-size: 20.8333px;
+    border-bottom: 1px solid #ededed;
+    img{
+        width: 126.04px;
+        height: 126.04px;
+        box-sizing: border-box;
+        flex-shrink: 0;
+        margin-right:32.2917px;
+        opacity: 1;
+    }
+    .item-content{
+        position: relative;
+    overflow: hidden;
+    h5{
+        font-size: 12.5px;
+        white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    font-size: 12.5px;
+    line-height: 15.2px;    margin: 0;
+    padding: 0;
+    color: #333;
+    }
+    p{
+        color: #7f7f7f;
+    font-size: 10.4167px;
+
+    line-height: 12px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    margin-top: 6.25px;
+    }
+    .price{
+        margin-top: 16.6667px;display: block;color: #d44d44;
+        display: inline-block;
+        white-space: nowrap;
+        font-weight: 700;
+        font-size: 12.5px;
+        i{
+            font-style: normal;
+            font-size: 10.4167px;color: #d44d44;
+        }
+        .origin-price{
+            color: #7f7f7f;
+            font-size: 10.4167px;
+            position: relative;
+            margin-left: 3px;
+            i{
+                font-style: normal;
+                font-size: 10.4167px;color:  #7f7f7f
+            }
+        }
+    }
+    }
+    }
+}

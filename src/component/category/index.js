@@ -1,41 +1,53 @@
 import React, { Component } from 'react'
-import { Route, Switch, NavLink, Redirect } from "react-router-dom"
 import "./category.scss"
-// import Appliance from "./components/appliance"
-// import Breath from "./components/breath"
-// import Computer from "./components/computer"
-// import Phones from "./components/phones"
-// import Shoes from "./components/shoes"
-// import Fittings from "./components/fittings"
-import { subRoutes } from "@/routes/index.js"
 // 引入搜索
 import Search from "../search"
+import Banner from "./banner"
+import Second from "./second"
 export default class Category extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            left: [],
+            tarIndex: 0,
 
+        }
+    }
+    changeIndex(index) {
+        this.setState({
+            tarIndex: index
+        })
+    }
+    componentDidMount() {
+        fetch("https://shopapi.smartisan.com/mobile/classify").then((res) => res.json()).then((res) => {
+            this.setState({
+                left: res.data
+            })
+        })
+    }
     render() {
+        let { left, tarIndex } = this.state;
         return (
             <>
                 <Search />
                 <div className="main">
                     <ul className="left-wrap" >
                         {
-                            subRoutes.map((item) => {
-                                return <li key={item.path}>   <NavLink to={item.path}>{item.name}</NavLink></li>
+                            left.map((item, index) => {
+                                return <li key={item.classifyId} ><a onClick={this.changeIndex.bind(this, index)} className={index === tarIndex ? "active" : ""} >{item.classifyName}</a></li>
                             })
                         }
                     </ul>
-                    <main className="right-wrap">
-                        <Switch>
+                    <section className="right-wrap">
+                        <section className="category-sub">
                             {
-                                subRoutes.map((item) => {
-                                    return <Route path={item.path} component={item.component} key={
-                                        item.name
-                                    }></Route>
-                                })
+                                left[tarIndex] && left[tarIndex].banner ? <Banner banner={left[tarIndex].banner} /> : ""
+
                             }
-                            <Redirect from="/category" to="/category/phones" exact></Redirect>
-                        </Switch>
-                    </main>
+                            {
+                                left[tarIndex] && left[tarIndex].second ? <Second second={left[tarIndex].second} /> : ""
+                            }
+                        </section></section>
                 </div>
             </>
         )

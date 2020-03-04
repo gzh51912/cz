@@ -1,0 +1,19 @@
+.nav-back{
+    padding: 10px 10px 0 20px;
+    left: -8px;
+    background: #070707;
+    background: linear-gradient(#131313,#070707);
+    color: #fff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 12px;
+    height: 32px;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    text-decoration: none;
+    display: block;
+    // width: 6px;
+}

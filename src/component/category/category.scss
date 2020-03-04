@@ -1,26 +1,16 @@
-body{
-    margin: 0;
-    padding: 0;
-}
-ul,li,ol{
-    margin: 0;padding: 0;list-style: none;
-}
-a{
-    color: #000;
-    text-decoration: none;
-}
-.App{
+
 
     .main{
         box-shadow: 0px 1px 0px 1px rgba(102, 102, 102, 0.1);
         position: relative;
+        top:0;
+        left: 0;
         width: 100%;
+        display: flex;
+        // height: calc(100% - 50px);
         box-sizing: border-box;
-        height: 100%;
+        justify-content: space-between;
           .left-wrap{
-            position: absolute;
-            left: 0;
-            height: 100%;
             width:80px;
             box-shadow: 1px 0 0 hsla(0,0%,40%,.1);
             padding: 32px 4px 4px;
@@ -48,16 +38,20 @@ a{
                     } 
                 }
     
-} 
-.right-wrap{
-    position: absolute;
-    padding-left: 5.5rem;
-    box-shadow: 1px 0 0 hsla(0,0%,40%,.1);
-    box-sizing: border-box;
-    z-index: 2;
-    // margin-left: 4rem; 
-   
-}
+            } 
+            .right-wrap{     
+            overflow-x: hidden;
+            overflow-y: auto;
+            // height: 100%;
+           width: calc(100% - 80px);
+            .category-sub:nth-child(n+1){
+                box-shadow: 0 1px hsla(0,0%,40%,.1);
+            }
+            .category-sub{
+                width: 100%;
+                height: 100%;
+            }
+            }
+
     }
   
-}

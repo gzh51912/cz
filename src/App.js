@@ -1,9 +1,9 @@
 import React from 'react';
-// import logo from './logo.svg';
 // import './App.css';
 import "./iconfont.css"
 import './App.scss';
-import { routes } from "@/routes/index.js"
+import Detail from "@/component/detail/index.js"
+import { routes, subRoutes } from "@/routes/index.js"
 // 作用：让不是路由切换的组件也是有路由切换的3个属性history/match/location
 import { withRouter, Route, NavLink, Redirect, Switch } from 'react-router-dom'
 import NotFound from "./component/notfound"
@@ -37,9 +37,16 @@ class App extends React.Component {
       case "/category": document.title = "分类"; break;
       case "/shop": document.title = "购物车"; break;
       case "/user": document.title = "个人中心"; break;
+      // case "/detail": document.title = "详情页"; break;
       default:
         if (pathname.includes("/category/")) {
           document.title = "分类"
+        }
+        else if (pathname === "/detail") {
+          document.title = "详情页"
+          this.setState({
+            visible: false
+          })
         } else {
           this.setState({
             visible: false
@@ -51,12 +58,21 @@ class App extends React.Component {
     return (
       <div className="App">
         <Switch>
+          {/* 下面是为了有二级列表页的导航 */}
+          {
+            subRoutes.map((item) => {
+              return <Route key={item.path} path={item.path} component={item.component} exact></Route>
+            })
+          }
           {
             routes.map((item) => {
               return <Route key={item.path} path={item.path} component={item.component}></Route>
             })
           }
+
+
           <Redirect from="/" to="/home" exact ></Redirect>
+          <Route path="/detail" component={Detail}></Route>
           <Route component={NotFound}></Route>
         </Switch>
 

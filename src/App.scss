@@ -22,7 +22,8 @@ i{
     color: #9a9a9a;
 }
 .App {
-    
+    display: flex;
+    flex-direction: column;
     .footer{
         position: fixed;
         bottom: 0;

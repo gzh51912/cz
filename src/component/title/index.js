@@ -5,6 +5,7 @@ export default class Title extends Component {
         return (
 
             <div className="title-bar">
+                {this.props.children}
                 <h1>{this.props.title}</h1>
             </div>
 
