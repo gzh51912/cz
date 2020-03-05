@@ -3,6 +3,7 @@ import React from 'react';
 import "./iconfont.css"
 import './App.scss';
 import Detail from "@/component/detail/index.js"
+import Login from "@/component/login/index.js"
 import { routes, subRoutes } from "@/routes/index.js"
 // 作用：让不是路由切换的组件也是有路由切换的3个属性history/match/location
 import { withRouter, Route, NavLink, Redirect, Switch } from 'react-router-dom'
@@ -47,6 +48,12 @@ class App extends React.Component {
           this.setState({
             visible: false
           })
+        }
+        else if (pathname === "/login") {
+          document.title = "登录"
+          this.setState({
+            visible: false
+          })
         } else {
           this.setState({
             visible: false
@@ -70,9 +77,10 @@ class App extends React.Component {
             })
           }
 
-
+          <Route path="/login" component={Login}></Route>
           <Redirect from="/" to="/home" exact ></Redirect>
           <Route path="/detail" component={Detail}></Route>
+
           <Route component={NotFound}></Route>
         </Switch>
 

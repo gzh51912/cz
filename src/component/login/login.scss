@@ -1,0 +1,294 @@
+// 新浪 QQ
+.lbottom{
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+  
+    p{
+        font-size: 14px;
+        color: #7f7f7f;
+        .iconfont{
+            margin: 0 10px;
+        
+            font-size: 38px;
+        }
+    }
+   
+}
+  .gl{
+        color: #5079D9;
+        font-size: 14px;
+    }
+    .registercloud {
+        color: #7f7f7f;
+        font-size: 14px;
+        display: inline-block;
+        margin-right: 28px;
+        line-height: 18px;
+        margin-top: 20px;
+    }
+//content
+.content{
+    margin: 60px 12px 0;
+    // 切换国家
+        .country-list {     
+            display: none; 
+            right: 12px;       
+            position: absolute;
+            top: 124px;
+            z-index: 500;
+            border: 1px solid #e2e2e2;
+            border-radius: 6px;
+            .delta-country {
+                background: #fff;
+                border-radius: 3px;
+                border: 1px solid #dadada;
+                height: 20px;
+                width: 20px;
+                position: absolute;
+                top: -6px;
+                right: 32px;
+                transform: rotate(45deg);
+                z-index: -1;
+            }
+            ul {
+                overflow-y: scroll;
+                color: #999;
+                background-color: #fff;
+                font-size: 14px;
+                border-radius: 6px;
+                position: relative;
+                height: 268px;
+                width: 250px;
+                li:first-child {
+                    border-top-style: none;
+                }
+               li {
+                    padding-left: 14px;
+                    padding-right: 20px;
+                    height: 40px;
+                    line-height: 40px;
+                    margin: 0;
+                    border-top: 1px solid #e2e2e2;
+                    cursor: pointer;
+                }
+                .selected {
+                    background-image: url("../../images/gg.png");
+                    background-repeat: no-repeat;
+                    background-position: center right;
+                    -webkit-background-size: auto 12px;
+                    background-size: auto 12px;
+                    font-weight: 700;
+                    color: #666;
+                }
+            }
+        }
+        .country-list:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            border-radius: 0 0 7px 7px;
+            background: linear-gradient(rgba(256,256,256,0),rgba(256,256,256,1));
+        }
+
+        // 登录
+       .btn-wrapper {
+            margin: 0;
+            .btn {
+                height: 53px;
+                line-height: 53px;width: 100%;
+                a {
+                    font-size: 18px;
+                    text-shadow: 0 -1px rgba(0,0,0,.2);
+                    height: 51px;
+                    line-height: 51px;
+                    border-radius: 6px;    cursor: not-allowed;background: linear-gradient(#6f94e8,#5178df);color: #FFF;
+                }
+            }
+            .disabled {
+                cursor: not-allowed;
+                opacity: .6;
+            }
+            .btn-primary {
+                background: #4C68B0;
+                box-shadow: 0 1px 1px -1px rgba(0,0,0,.8);
+                background: -webkit-linear-gradient(#6788d0,#4364bb);
+                background: linear-gradient(#6788d0,#4364bb);
+                padding: 1px;
+                box-sizing: border-box;
+            }
+            .btn {
+                border-radius: 6px;    
+                display: inline-block;
+                overflow: hidden;
+                text-align: center;
+              
+            }
+        }
+        //    3个选项框
+        .common-form{
+            li {
+                margin: 0 0 12px;
+                overflow: hidden;
+                position: relative;
+                // .invalid {
+                //     border-color: #e66157!important;
+                //     opacity: 1!important;
+                // }
+             
+                .input {
+                    border-radius: 4px;
+                    box-shadow: 0 3px 5px -4px rgba(0,0,0,.4) inset, -1px 0 3px -2px rgba(0,0,0,.1) inset;    background-color: #fff;
+                    border: 1px solid #d1d1d1;
+                    height: 44px;
+                    .cr {
+                        position: absolute;
+                        left: 10px;
+                        line-height: 44px;
+                        display: inline-block;
+                        text-align: center;
+                        font-size: 16px;
+                    }
+                     .country {
+                        position: absolute;
+                        right: 10px;
+                        font-size: 15px;
+                        line-height: 44px;
+                        display: inline-block;
+                        max-width: 76px;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        padding-right: 20px;
+                        text-align: right;
+                        background-image: url("../../images/g1.png");
+                        background-size: auto 9px;
+                        background-repeat: no-repeat;
+                        background-position: right center;
+                        cursor: pointer;
+                        z-index: 100;
+                    }
+                }
+            }
+            .verification{
+                .input {
+                    input {
+                        padding: 0 10px;
+                        width: 100%;font-size: 15px;    height: 44px;
+                        background: 0 0;
+                        border: 0;
+                        box-sizing: border-box;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                    }
+                    width: 60.6%;
+                    .placeholder{
+                        line-height: 44px;
+                        left: 10px;    color: #b2b2b2;
+                        font-size: 15px;
+                        padding: 1px 0 0;
+                        position: absolute;
+                        top: 0;
+                    }
+                }
+                .btn {
+                    border-radius: 6px;
+                    cursor: pointer;
+                    display: inline-block;
+                    height: 33px;
+                    line-height: 34px;
+                    overflow: hidden;
+                    text-align: center;
+                    width: 153px;
+                    .disabled {
+                        cursor: not-allowed;
+                        opacity: .6;
+                    }
+                }
+                .btn-default {
+                    width: 28.3333%;
+                    position: absolute;
+                    top: 0;text-align: center;
+                    right: 0;height: 46px;
+                    line-height: 46px;
+                    background: 0 0;
+                    border: 1px solid #d1d1d1;width: 36%;
+                    box-sizing: border-box;
+                    a{
+                        font-size: 14px;
+                        color: #000;
+
+                        display: block;     line-height: 46px;
+                        background: linear-gradient(#fcfcfc,#f7f7f7);
+                        box-shadow: none;
+                    }
+                }
+              
+            }
+            .username 
+            {
+               .ccc {
+                left: 0;
+                line-height: 44px;
+ 
+    display: inline-block;
+    width: 55px;
+    text-align: center;
+            } 
+            .placeholder.indent {
+                left: 55px;
+                line-height: 44px;
+                color: #b2b2b2;
+    font-size: 15px;
+    padding: 1px 0 0;
+    position: absolute;
+
+    top: 0;
+            }
+            input.indent {
+                padding-left: 55px;
+                font-size: 15px;    height: 44px;    background: 0 0;
+                border: 0;
+                box-sizing: border-box;    position: absolute;
+                top: 0;
+                left: 0;
+                // padding: 0 10px;
+    // width: 100%;
+            }
+            }
+            .password{
+                .input{
+                    .placeholder{
+                        font-size: 15px;line-height: 44px;
+                        left: 10px;
+                        color: #b2b2b2;
+                        font-size: 15px;
+                        padding: 1px 0 0;
+                        position: absolute;
+               
+                        top: 0;
+                    }
+                    input{
+                        padding: 0 10px;
+                        width: 100%;    font-size: 15px;height: 44px;position: absolute;
+                        top: 0;
+                        left: 0;    background: 0 0;
+                        border: 0;
+                        box-sizing: border-box;
+                    
+                    }
+                }
+            }
+        }
+}

@@ -26,7 +26,7 @@ export default class Lb extends Component {
         })
     }
     render() {
-        console.log(this.props.lb);
+        // console.log(this.props.lb);
         let { lb } = this.state;
         return (
             <div className="swiper-container">

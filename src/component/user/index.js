@@ -30,15 +30,18 @@ export default class User extends Component {
             ]
         }
     }
+    tz = () => {
+        this.props.history.push("/login");
+    }
     render() {
         return (
             <div className="big">
                 <Title title="个人中心" />
                 <div className="content">
-                    <div className="box-userinfo ">
-                        <div className="avatar">
+                    <div className="box-userinfo " >
+                        <div className="avatar" >
                             <img src="https://static.smartisanos.cn/account/asset/img/default-user-avatar.png" alt="" />
-                        </div> 登录/注册 <i>></i></div>
+                        </div> <span onClick={this.tz}>登录/注册 </span><i>></i></div>
                     <ul className=" menu-list-parallel ">
                         {
                             this.state.top.map((item) => {
