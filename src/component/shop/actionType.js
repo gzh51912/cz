@@ -1,0 +1,7 @@
+export const ADD = "ADD"
+export const DELETE = "DELETE"
+export const UPDATE = "UPDATE"
+export const CHECK = "CHECK"
+export const CLEAR = "CLEAR"
+export const REDUCER = "REDUCER"
+export const CHECKED = "CHECKED"

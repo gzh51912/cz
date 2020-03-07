@@ -1,9 +1,11 @@
 import axios from 'axios';
-
+// axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 var service = axios.create({
-    baseURL: '/hd',  //所有的请求都会 带上 /api
+    baseURL: "/hd",  //所有的请求都会 带上 /api
     "content-type": "application/json",
-    timeout: 5000
+
+    // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 
+    // timeout: 5000
 })
 // //请求拦截器
 service.interceptors.request.use((config) => {
@@ -16,11 +18,11 @@ service.interceptors.request.use((config) => {
 })
 // //响应拦截器
 service.interceptors.response.use((res) => {
-    res.addHeader("Access-Control-Allow-Origin", "*");
     // if (res.data.status === -1) {//token验证失败跳转到登录页面
     //     window.location.href = "/login"
     // }
-    return res
+
+    return res.data
 })
 
 export default service;

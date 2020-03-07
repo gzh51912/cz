@@ -5,6 +5,7 @@ import './App.scss';
 import Detail from "@/component/detail/index.js"
 import Login from "@/component/login/index.js"
 import { routes, subRoutes } from "@/routes/index.js"
+import { Toast } from 'antd-mobile';
 // 作用：让不是路由切换的组件也是有路由切换的3个属性history/match/location
 import { withRouter, Route, NavLink, Redirect, Switch } from 'react-router-dom'
 import NotFound from "./component/notfound"
@@ -73,7 +74,13 @@ class App extends React.Component {
           }
           {
             routes.map((item) => {
+              if (!sessionStorage.getItem("uid") && item.path === "/shop") {
+                // Toast.info('请先登录才能访问哦~', 1);
+                return <Route path="/shop" component={Login} exact key="/shop"></Route>
+              }
               return <Route key={item.path} path={item.path} component={item.component}></Route>
+
+
             })
           }
 
@@ -83,6 +90,7 @@ class App extends React.Component {
 
           <Route component={NotFound}></Route>
         </Switch>
+
 
         <ul className="footer" style={{ "display": this.state.visible ? "block" : "none" }}>
           {routes.map((item) => {

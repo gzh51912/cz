@@ -30,9 +30,15 @@ export default class User extends Component {
             ]
         }
     }
-    tz = () => {
-        this.props.history.push("/login");
+    tz = (e) => {//跳转登录
+        if (e.target.innerText.includes(sessionStorage.getItem("phone"))) {
+            sessionStorage.clear();
+            this.props.history.push("/")
+        } else {
+            this.props.history.push("/login");
+        }
     }
+
     render() {
         return (
             <div className="big">
@@ -41,7 +47,8 @@ export default class User extends Component {
                     <div className="box-userinfo " >
                         <div className="avatar" >
                             <img src="https://static.smartisanos.cn/account/asset/img/default-user-avatar.png" alt="" />
-                        </div> <span onClick={this.tz}>登录/注册 </span><i>></i></div>
+                        </div> <span onClick={this.tz}>{sessionStorage.getItem("phone") ? sessionStorage.getItem("phone") + "点击退出" : "登录/注册"} </span>
+                        <i>></i></div>
                     <ul className=" menu-list-parallel ">
                         {
                             this.state.top.map((item) => {

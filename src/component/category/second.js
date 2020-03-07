@@ -6,8 +6,8 @@ import { withRouter } from "react-router-dom"
 class Second extends Component {
     tz(id) {
         // console.log(id)
-        this.props.history.push("/category/list", { id: id });
-        sessionStorage.setItem("path", "/category");
+        this.props.history.push("/category/list");
+        // sessionStorage.setItem("path", "/category");
     }
     render() {
         // console.log(this.props.second)

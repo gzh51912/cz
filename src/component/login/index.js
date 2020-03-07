@@ -2,7 +2,12 @@ import React, { Component } from 'react'
 import "./login.scss"
 import Title from "@/component/title/index.js"
 import { Checkbox } from 'antd-mobile';
-export default class Login extends Component {
+import { Toast } from 'antd-mobile';
+import { checkPhone, login, reg } from "@/api/request.js"
+import { withRouter } from 'react-router-dom';
+
+
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -297,76 +302,202 @@ export default class Login extends Component {
             }
             ],
             visible: true,//默认是短信验证码登录
+            visible2: false,//国家例表一开始是隐藏,
+            countries: "中国大陆",
+            code: 86,
+            phone: false,//判断手机号码正则是否通过
+            password: false,//判断密码正则是否通过
+            xz: ""
 
         }
     }
-    qh = () => {
+    qh = () => {//切换短信密码验证和手机号验证。
         this.setState({
             visible: !this.state.visible,
+        })
+    }
+    gjqh = () => {//国家显示或隐藏
+        this.setState({
+            visible2: !this.state.visible2
+        })
+    }
+    gjqhfh(item) {//例表隐藏 更新国家或区域号
+        this.setState({
+            visible2: !this.state.visible2,
+            countries: item.name,
+            code: item.code
+        })
+    }
+    phone = (e) => {
+        let reg = /^1[3-9]\d{9}$/;
+        if (!reg.test(e.target.value)) {
+            Toast.info('请输入正确的手机号码', 2);
+        } else {
+            this.setState({
+                phone: true
+            })
+        }
+    }
+    password = (e) => {
+        let reg = /^\w{6,20}$/;
+        if (!reg.test(e.target.value)) {
+            Toast.info('请输入6位数以上任意数字字母下划线组合的字符', 1);
+        } else {
+            this.setState({
+                password: true
+            })
+        }
+    }
+    //点击登录
+    login = () => {
+        let { code, visible, phone, password } = this.state;
+        let uid = "";
+        let users = "";
+        //短信验证应先查询该号码
+        if (visible === true && phone === true) {
+            // login()
+            let loginPhone = code + this.refs.phone.value
+            checkPhone(loginPhone).then((res) => {
+                if (res.msg === "不能注册") {
+                    uid = res.data[0].uid;
+                    users = res.data[0].phone;
+                } else {//可以注册 
+                    reg(loginPhone, "123456").then((res) => {
+                        // console.log(res);//显示注册成功与否
+                        if (res.msg === "注册成功") {
+                            checkPhone(loginPhone).then((res) => {
+                                users = res.data[0].phone;
+                                uid = res.data[0].uid;
+                            })
+                        } else {
+                            console.log("注册失败")
+                        }
+                    })
+                }
+                sessionStorage.setItem("phone", users);
+                sessionStorage.setItem("uid", uid);
 
+            }).then(() => {
+
+                if (sessionStorage.getItem("path")) {
+                    this.props.history.push(sessionStorage.getItem("path"))
+                    // window.location.href = sessionStorage.getItem("path");
+                }
+                else if (this.props.location.pathname) {
+                    this.props.history.push(this.props.location.pathname)
+                    // window.location.href = this.props.location.pathname
+
+                }
+                else {
+                    this.props.history.push("/")
+                    // window.location.href = "/"
+                }
+
+            })
+
+        }
+        //手机密码登录
+        else if (visible === false && phone === true && password === true) {
+            let loginPhone = code + this.refs.phone.value;//手机号
+            let passwordA = this.refs.password.value;//密码
+            let { xz } = this.state;//keep是否自动登录
+            login(loginPhone, passwordA, xz).then((res) => {
+                if (res.msg === "登录失败") {
+                    Toast.info('您输入的信息有误,请输入正确的登录信息', 2);
+                } else {
+                    let uid = res.data[0].uid;
+                    let users = res.data[0].phone;
+                    if (res.token) {
+                        sessionStorage.setItem("token", res.token);
+                    }
+                    sessionStorage.setItem("uid", uid);
+                    sessionStorage.setItem("phone", users);
+                    setTimeout(() => {
+                        if (sessionStorage.getItem("path")) {
+                            this.props.history.push(sessionStorage.getItem("path"))
+                        }
+                        else if (this.props.location.pathname) {
+                            this.props.history.push(this.props.location.pathname)
+                        }
+                        else {
+                            this.props.history.push("/")
+                        }
+                    }, 500);
+                }
+
+            })
+        } else {
+            Toast.info('请完善正确的信息', 1);
+        }
+    }
+    check = (e) => {
+        this.setState({
+            xz: e.target.checked + ""
         })
     }
     render() {
-
+        // console.log(this.props)
+        let { countries, country, code, visible, visible2 } = this.state;
         return (
             <>
                 {/* 标题 */}
-                <Title title={this.state.visible ? "短信验证码登录" : "账号密码登录"} />
-                <div className="content" style={{ marginTop: "80px" }}>
+                <Title title={visible ? "短信验证码登录" : "账号密码登录"} />
+                <div className="content" style={{ marginTop: "80px", padding: "0 15px" }}>
                     {/* 3个选项框 */}
                     <div className="common-form">
                         <li className="country-region">
                             <div className="input">
                                 {/* <span class="icon"><i>国家和地区</i></span> */}
                                 <span className="cr">国家和地区</span>
-                                <span role="button" className="country ng-binding" ng-bind="country">阿尔巴尼亚</span>
+                                <span className="country ng-binding" onClick={this.gjqh}  >{countries}</span>
                             </div>
                         </li>
                         <li className="username">
                             <div className="input">
-                                <span className="ccc ng-binding" >355</span>
-                                <label htmlFor="mobile" className="placeholder indent">手机号</label>
-                                <input className="indent" type="text" name="mobile" />
+                                <span className="ccc ng-binding" >{code}</span>
+                                <label htmlFor="mobile" className="placeholder indent"></label>
+                                <input className="indent" type="text" name="mobile" placeholder="手机号" onBlur={this.phone} ref="phone" />
                             </div>
                         </li>
                         {/* 手机验证码显示以下状态 */}
-                        <li className="verification" style={{ display: this.state.visible ? "block" : "none" }}>
+                        <li className="verification" style={{ display: visible ? "block" : "none" }}>
                             <div className="input invalid">
-                                <label htmlFor="verification" className="placeholder">短信验证码</label>
-                                <input type="text" name="verification" className="ng-pristine" />
+                                <label htmlFor="verification" className="placeholder"></label>
+                                <input type="text" name="verification" className="ng-pristine" placeholder="短信验证码" />
                             </div>
                             <div className="btn btn-default disabled" ><a role="button" >获取验证码</a></div>
                         </li>
                         {/* 账号密码登录 */}
-                        <li className="password" style={{ display: this.state.visible ? "none" : "block" }}>
+                        <li className="password" style={{ display: visible ? "none" : "block" }}>
                             <div className="input">
-                                <label htmlFor="password" className="placeholder">密码</label>
-                                <input type="password" className="password" />
+                                <label htmlFor="password" className="placeholder"></label>
+                                <input type="password" className="password" placeholder="密码" ref="password" onBlur={this.password} />
 
                             </div>
                         </li>
                     </div>
                     {/* 国家例表 */}
-                    <div className="country-list" >
+                    <div className="country-list" style={{ display: visible2 ? "block" : "none" }} >
                         <span className="delta-country"></span>
                         <ul>
                             {
-                                this.state.country.map((item) => {
-                                    return <li className="ng-binding ng-scope">{item.name}</li>
+                                country.map((item, index) => {
+                                    return <li className="ng-binding ng-scope" key={index} onClick={this.gjqhfh.bind(this, item)}>{item.name}</li>
                                 })
                             }
                         </ul></div>
                     {/* 登录按钮 */}
                     <div className="btn-wrapper">
-                        <div className="btn btn-primary disabled">
+                        <div className="btn btn-primary disabled" onClick={this.login}>
                             <a role="button">登录</a></div></div>
                     {/* 验证码登录的时候显示 */}
-                    <p style={{ display: this.state.visible ? "block" : "none" }}><span className="registercloud">未注册的手机号验证后将自动注册</span>
+                    <p style={{ display: visible ? "block" : "none" }}><span className="registercloud">未注册的手机号验证后将自动注册 </span>
                         <span className="gl" onClick={this.qh}>账号密码登录</span></p>
+                    <p>初始密码 123456</p>
                     {/* 账号密码登录时显示 */}
-                    <p style={{ display: this.state.visible ? "none" : "block" }}>
-                        <Checkbox>
-                            <span className="checkbox-on m-blue-checkbox-new">
+                    <p style={{ display: visible ? "none" : "block" }}>
+                        <Checkbox onChange={this.check}>
+                            <span className="checkbox-on m-blue-checkbox-new" >
                             </span></Checkbox>
                         <span className="registercloud">自动登录</span>
                         <span className="registercloud" onClick={this.qh}>短信验证码登录</span>
@@ -383,3 +514,4 @@ export default class Login extends Component {
         )
     }
 }
+export default withRouter(Login)

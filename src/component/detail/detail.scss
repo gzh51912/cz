@@ -67,6 +67,7 @@
     background: #fff;        height: 80vw !important;
     width: 100%;
     .swiper-wrapper{
+        
         .swiper-slide{
             display: inline-block;
             list-style: none;
@@ -323,6 +324,9 @@
         .item-wrapper {
             width: calc(50% - 3.2px);
             float: left;background: #fff;
+            height: 300px;
+    box-sizing: border-box;
+    margin: 2px 1px;
             .product-box-item{
                 .item-img {
                     display: block;
@@ -348,7 +352,7 @@
                         padding: 2.08333px 5.55562px;
                         font-weight: 700;
                         border-radius: 9.6px;
-                        z-index: 89;
+                        // z-index: 89;
                         white-space: nowrap;
                         border: 1px solid #e6e6e6;
                         -webkit-transform: scale(1);

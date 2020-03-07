@@ -5,16 +5,27 @@ import Fh from '@/component/fh'
 import Lb from "@/component/lb/index.js"
 import { Badge } from 'antd-mobile';
 import Recommend from "@/component/recommend/index.js"
-export default class Detail extends Component {
+import { connect } from "react-redux"
+import actionCreators from "@/component/list/actionCreator"
+import { add } from "@/api/request.js"
+import { Toast } from 'antd-mobile';
+
+// let mapState = (state) => state;
+let mapState = (state) => {
+    // console.log(state);
+    return {
+        length: state.cart.list.length
+    }
+}
+@connect(mapState, actionCreators)
+class Detail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             title: ["商品", "详情", "参数", "推荐"],
-            gl: 0,
-            list: [],
-            lb: [],
-            shopname: "",
-            tj: []
+            gl: 0,//点击高亮
+            list: [],//例表数据
+            lb: [],//商品轮播图
         }
     }
     changeGl(index) {
@@ -23,21 +34,41 @@ export default class Detail extends Component {
         })
     }
     componentDidMount() {
-        fetch("https://shopapi.smartisan.com/product/skus?ids=100060901&with_stock=true&with_spu=true").then((res) => res.json()).then((res) => {
+        // this.props.getId()
+        // let id = this.props.list.id;
+        // let id = sessionStorage.getItem("tzId");
+        let id = sessionStorage.getItem("tzId");
+        fetch(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).then((res) => res.json()).then((res) => {
             this.setState({
                 list: res.data.list,
             })
-        });
-        fetch("https://shopapi.smartisan.com/product/skus?ids=100060201,100060202,100061001,100060401,100060601,100061101,100061201,100062701,100063401,100061801,100059001,100052801,100023501,100059808,100059726,100059315,100059401,100059901,100061001&with_stock=true&with_spu=true").then((res) => res.json()).then((res) => {
-            // console.log(res.data.list);
-            this.setState({
-                tj: res.data.list
-            })
+        })
+        // fetch("https://shopapi.smartisan.com/product/skus?ids=100060201,100060202,100061001,100060401,100060601,100061101,100061201,100062701,100063401,100061801,100059001,100052801,100023501,100059808,100059726,100059315,100059401,100059901,100061001&with_stock=true&with_spu=true").then((res) => res.json()).then((res) => {
+        //     this.setState({
+        //         tj: res.data.list
+        //     })
+        // })
+    }
+    tzcart = (e) => {
+        e.persist();
+        add(sessionStorage.getItem("uid"), sessionStorage.getItem("listId")).then((res) => {
+            if (res.msg === "添加成功") {
+
+                if (e.target.innerText === "加入购物车") {
+
+                    Toast.info('添加成功', 1);
+
+                }
+                this.props.history.push("/shop");
+            } else {
+                Toast.info('添加失败', 1);
+            }
         })
     }
+
     render() {
-        // console.log(this.state.list)
         let { title, gl } = this.state;
+        // console.log(this.props.length)
         return (
             <div id="detail">
                 {/* 标题 */}
@@ -57,7 +88,6 @@ export default class Detail extends Component {
                         this.state.list.map((item, index) => {
                             return <div key={index}>
                                 <Lb lb={item.shop_info.ali_images} />
-
                                 <section className="section-floor ">
                                     <div className="item-titlebox ">
                                         <div className="title-content">
@@ -86,9 +116,8 @@ export default class Detail extends Component {
                                 <section className="section-floor ">
                                     <div className="title-header box-line"> <div className="title-wrapper"> <h2 >商品详情</h2> </div> </div>
                                     <div className="img">
-                                        <img src={item.shop_info.tpl_content.base.images.ali.url[0]} alt="" /></div>
+                                        <img src={item.shop_info.tpl_content.base.images.ali_mobile.url} alt="" /></div>
                                 </section>
-
                             </div>
                         }) : ""
                 }
@@ -99,13 +128,14 @@ export default class Detail extends Component {
                 <Recommend />
                 {/* 加购立即购买 */}
                 <ul className="footer">
-                    <Badge text='1'>
+                    <Badge text={this.props.length}>
                         <span className="iconfont icongouwuche"></span></Badge>
-                    <li><a>现在购买</a></li>
-                    <li><a className="highlight">加入购物车</a></li>
+                    <li onClick={this.tzcart}><a>现在购买</a></li>
+                    <li onClick={this.tzcart}><a className="highlight">加入购物车</a></li>
                 </ul>
 
             </div>
         )
     }
 }
+export default Detail
