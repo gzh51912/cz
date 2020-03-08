@@ -74,24 +74,15 @@ class App extends React.Component {
           }
           {
             routes.map((item) => {
-              if (!sessionStorage.getItem("uid") && item.path === "/shop") {
-                // Toast.info('请先登录才能访问哦~', 1);
-                return <Route path="/shop" component={Login} exact key="/shop"></Route>
-              }
               return <Route key={item.path} path={item.path} component={item.component}></Route>
-
-
             })
           }
 
           <Route path="/login" component={Login}></Route>
           <Redirect from="/" to="/home" exact ></Redirect>
           <Route path="/detail" component={Detail}></Route>
-
           <Route component={NotFound}></Route>
         </Switch>
-
-
         <ul className="footer" style={{ "display": this.state.visible ? "block" : "none" }}>
           {routes.map((item) => {
             return <li key={item.path}><NavLink to={item.path}><i className={item.i}></i><span>{item.name}</span></NavLink></li>

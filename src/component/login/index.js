@@ -307,7 +307,8 @@ class Login extends Component {
             code: 86,
             phone: false,//判断手机号码正则是否通过
             password: false,//判断密码正则是否通过
-            xz: ""
+            xz: "",
+
 
         }
     }
@@ -361,6 +362,8 @@ class Login extends Component {
                 if (res.msg === "不能注册") {
                     uid = res.data[0].uid;
                     users = res.data[0].phone;
+                    sessionStorage.setItem("phone", users);
+                    sessionStorage.setItem("uid", uid);
                 } else {//可以注册 
                     reg(loginPhone, "123456").then((res) => {
                         // console.log(res);//显示注册成功与否
@@ -368,30 +371,26 @@ class Login extends Component {
                             checkPhone(loginPhone).then((res) => {
                                 users = res.data[0].phone;
                                 uid = res.data[0].uid;
+                                sessionStorage.setItem("phone", users);
+                                sessionStorage.setItem("uid", uid);
                             })
                         } else {
                             console.log("注册失败")
                         }
                     })
                 }
-                sessionStorage.setItem("phone", users);
-                sessionStorage.setItem("uid", uid);
 
-            }).then(() => {
-
-                if (sessionStorage.getItem("path")) {
+                if (this.props.location.state != undefined) {
+                    this.props.history.push(this.props.location.state.pathname)
+                } else if (sessionStorage.getItem("path")) {
                     this.props.history.push(sessionStorage.getItem("path"))
-                    // window.location.href = sessionStorage.getItem("path");
-                }
-                else if (this.props.location.pathname) {
-                    this.props.history.push(this.props.location.pathname)
-                    // window.location.href = this.props.location.pathname
-
                 }
                 else {
                     this.props.history.push("/")
-                    // window.location.href = "/"
                 }
+
+
+
 
             })
 
@@ -416,10 +415,12 @@ class Login extends Component {
                         if (sessionStorage.getItem("path")) {
                             this.props.history.push(sessionStorage.getItem("path"))
                         }
-                        else if (this.props.location.pathname) {
-                            this.props.history.push(this.props.location.pathname)
+                        else if (this.props.history.goBack()) {
+                            // this.props.history.push(this.props.location.pathname)
+                            this.props.history.goBack();
                         }
                         else {
+                            console.log(this.props.history.goBack())
                             this.props.history.push("/")
                         }
                     }, 500);

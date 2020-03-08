@@ -5,12 +5,13 @@ import { connect } from "react-redux"
 class EditState extends Component {
     render() {
         // console.log(this.props)
+        let { changeCheck } = this.props;
         return <>
             {
-                this.props.dj === true ? this.props.cart.list.data.map((item) => {
+                sessionStorage.getItem('uid') && this.props.dj === true ? this.props.cart.list.data.map((item, index) => {
                     return <> <div className="group" key={item.listId} style={{ display: this.props.dj === false ? "none" : "block" }}>
                         <div className="item">
-                            <Checkbox>
+                            <Checkbox onClick={changeCheck.bind(this, index)} checked={item.checked}>
                                 <span className="checkbox-on m-blue-checkbox-new">
                                 </span></Checkbox>
                             <div className="item-wrapper">

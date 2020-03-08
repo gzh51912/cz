@@ -2,7 +2,9 @@ import axios from 'axios';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 var service = axios.create({
     baseURL: "/hd",  //所有的请求都会 带上 /api
+    "Content-Type": "application/x-www-form-urlencoded",
     "content-type": "application/json",
+
 
     // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'; 
     // timeout: 5000

@@ -1,15 +1,16 @@
-import { ADD, DELETE, UPDATE, CHECK, CLEAR, REDUCER, CHECKED } from "./actionType"
+import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL } from "./actionType"
 
 const initialState = {
     list: [],
 }
 
-export default (state = initialState, { type, list, index }) => {
+export default (state = initialState, { type, list, index, trorfa }) => {
     switch (type) {
         //查询 购物车得数据
         case CHECK:
             var newState = JSON.parse(JSON.stringify(state));
             newState.list = list;
+            // console.log(newState)
             newState.list.data.forEach((item) => item.checked = false);
             // console.log(newState)
             return newState
@@ -31,6 +32,23 @@ export default (state = initialState, { type, list, index }) => {
             newState.list.data[index].checked = !newState.list.data[index].checked;
             // console.log(newState)
             return newState
+        // 点击全选和全不选
+        case CHECKALL:
+            var newState = JSON.parse(JSON.stringify(state));
+            newState.list.data.forEach((item) => {
+                item.checked = trorfa
+            });
+            return newState;
+        //清空
+        case CLEAR:
+            var newState = JSON.parse(JSON.stringify(state));
+            newState.list.data = [];
+            return newState;
+        //删除一条
+        case DELETE:
+            var newState = JSON.parse(JSON.stringify(state));
+            newState.list.data.splice(index, 1);
+            return newState;
         default:
             return state
     }

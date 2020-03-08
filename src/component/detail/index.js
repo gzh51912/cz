@@ -6,18 +6,26 @@ import Lb from "@/component/lb/index.js"
 import { Badge } from 'antd-mobile';
 import Recommend from "@/component/recommend/index.js"
 import { connect } from "react-redux"
-import actionCreators from "@/component/list/actionCreator"
+// import actionCreators from "@/component/list/actionCreator"
+import actionCreator from "@/component/shop/actionCreator"
+import store from "@/store/index.js"
 import { add } from "@/api/request.js"
 import { Toast } from 'antd-mobile';
 
-// let mapState = (state) => state;
 let mapState = (state) => {
-    // console.log(state);
     return {
-        length: state.cart.list.length
+        allCountA() { //总的数量
+            var s = 0;
+            if (!Array.isArray(state.cart.list)) {
+                state.cart.list.data.forEach((item) => {
+                    s += item.num;
+                })
+            }
+            return s;
+        },
     }
 }
-@connect(mapState, actionCreators)
+@connect(mapState, actionCreator)
 class Detail extends Component {
     constructor(props) {
         super(props);
@@ -25,50 +33,68 @@ class Detail extends Component {
             title: ["商品", "详情", "参数", "推荐"],
             gl: 0,//点击高亮
             list: [],//例表数据
-            lb: [],//商品轮播图
+            lb: [],//商品轮播图,
+            count: 0
         }
     }
+
     changeGl(index) {
         this.setState({
             gl: index//改变高亮
         })
     }
+    shouldComponentUpdate(nextprops, nextstate) {//是否更新
+        if (this.props.cart !== nextprops.cart || this.state !== nextstate) {
+            return true
+        } else {
+            return false
+        }
+    }
     componentDidMount() {
-        // this.props.getId()
-        // let id = this.props.list.id;
-        // let id = sessionStorage.getItem("tzId");
         let id = sessionStorage.getItem("tzId");
         fetch(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).then((res) => res.json()).then((res) => {
             this.setState({
                 list: res.data.list,
             })
         })
-        // fetch("https://shopapi.smartisan.com/product/skus?ids=100060201,100060202,100061001,100060401,100060601,100061101,100061201,100062701,100063401,100061801,100059001,100052801,100023501,100059808,100059726,100059315,100059401,100059901,100061001&with_stock=true&with_spu=true").then((res) => res.json()).then((res) => {
-        //     this.setState({
-        //         tj: res.data.list
-        //     })
-        // })
+        if (sessionStorage.getItem("uid")) {
+            this.props.checkAtion(sessionStorage.getItem("uid"));
+        }
+        store.subscribe(() => {
+            this.setState({
+                count: this.props.allCountA()
+            })
+        })
     }
     tzcart = (e) => {
         e.persist();
-        add(sessionStorage.getItem("uid"), sessionStorage.getItem("listId")).then((res) => {
-            if (res.msg === "添加成功") {
-
-                if (e.target.innerText === "加入购物车") {
-
-                    Toast.info('添加成功', 1);
-
+        if (sessionStorage.getItem("uid")) {
+            add(sessionStorage.getItem("uid"), sessionStorage.getItem("listId")).then((res) => {
+                if (res.msg === "添加成功") {
+                    if (e.target.innerText === "加入购物车") {
+                        Toast.info('添加成功', 1);
+                        window.location.href = "/detail"
+                    } else {
+                        this.props.history.push("/shop");
+                    }
+                } else {
+                    Toast.info('添加失败', 1);
                 }
-                this.props.history.push("/shop");
-            } else {
-                Toast.info('添加失败', 1);
-            }
-        })
+            })
+        } else {
+            Toast.info('请先登录~', 1);
+            sessionStorage.setItem("path", this.props.location.pathname);
+            setTimeout(() => {
+                this.props.history.push("/login");
+            }, 1000);
+        }
     }
-
+    tz = () => {
+        this.props.history.push("/shop")
+    }
     render() {
+        // console.log(this.props);
         let { title, gl } = this.state;
-        // console.log(this.props.length)
         return (
             <div id="detail">
                 {/* 标题 */}
@@ -128,8 +154,8 @@ class Detail extends Component {
                 <Recommend />
                 {/* 加购立即购买 */}
                 <ul className="footer">
-                    <Badge text={this.props.length}>
-                        <span className="iconfont icongouwuche"></span></Badge>
+                    <Badge text={this.state.count}>
+                        <span className="iconfont icongouwuche" onClick={this.tz}></span></Badge>
                     <li onClick={this.tzcart}><a>现在购买</a></li>
                     <li onClick={this.tzcart}><a className="highlight">加入购物车</a></li>
                 </ul>

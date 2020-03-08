@@ -6,9 +6,7 @@ import { connect } from "react-redux"
 import "./list.scss"
 let mapState = (state) => state;
 @connect(mapState, actionCreator)
-
 class List extends Component {
-
     shouldComponentUpdate(nextprops, nextstate) {//是否更新
         if (this.props.list.list !== nextprops.list.list) {
             return true
@@ -17,7 +15,6 @@ class List extends Component {
         }
     }
     componentDidMount() {
-
         this.props.getLists()//发动作获取例表数据
     }
     tzxq(id, listId) {

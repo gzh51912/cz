@@ -1,4 +1,4 @@
-import { ADD, DELETE, UPDATE, CHECK, CLEAR, REDUCER, CHECKED } from "./actionType"
+import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL } from "./actionType"
 import { getCartList } from "@/api/request"
 
 
@@ -25,14 +25,7 @@ export default {
             index
         }
     },
-    //修改
-    updateAction(index, num) {
-        return {
-            type: UPDATE,
-            index,
-            num
-        }
-    },
+
 
     //查询 购物车得数据
     checkAtion(uid) {
@@ -52,10 +45,18 @@ export default {
             type: CLEAR
         }
     },
+    //修改单个选中状态
     changeCheck(index) {
         return {
             type: CHECKED,
             index
+        }
+    },
+    //全选或者全不选
+    checkAll(trorfa) {
+        return {
+            type: CHECKALL,
+            trorfa
         }
     }
 

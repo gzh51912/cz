@@ -13,8 +13,6 @@ export default class Fh extends Component {
         this.props.history.goBack();
     }
     render() {
-        // console.log(this.props.history)
-        // console.log(this.props);
         return (
             <a className="nav-back" onClick={this.changBack}> 《 返回</a>
         )

@@ -43,7 +43,7 @@ class FinishState extends Component {
                     dj === false ? cart.list.data.map((item, index) => {
                         return <div className="group" key={item.listId} style={{ display: dj === false ? "block" : "none" }}>
                             <div className="item">
-                                <Checkbox onClick={changeCheck.bind(this, index)}>
+                                <Checkbox onClick={changeCheck.bind(this, index)} checked={item.checked}>
                                     <span className="checkbox-on m-blue-checkbox-new">
                                     </span></Checkbox>
                                 <div className="item-wrapper">

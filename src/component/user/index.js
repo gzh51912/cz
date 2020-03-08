@@ -36,9 +36,16 @@ export default class User extends Component {
             this.props.history.push("/")
         } else {
             this.props.history.push("/login");
+            sessionStorage.setItem("path", this.props.location.pathname)
         }
     }
-
+    shouldComponentUpdate(nextprops, nextstate) {//是否更新
+        if (this.props !== nextprops || this.state !== nextstate) {
+            return true
+        } else {
+            return false
+        }
+    }
     render() {
         return (
             <div className="big">
