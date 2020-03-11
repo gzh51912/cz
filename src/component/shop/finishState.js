@@ -13,7 +13,7 @@ class FinishState extends Component {
         let uid = sessionStorage.getItem("uid") * 1;
         if (e.target.innerText === "+") {
             //加
-            if (num < max) {
+            if (num + 1 < max) {
                 updateNum(listId, uid, num * 1 + 1).then((res) => {
                     if (res.msg === "修改成功") {
                         add(index);

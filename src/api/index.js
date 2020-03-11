@@ -1,7 +1,7 @@
 import axios from 'axios';
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 var service = axios.create({
-    baseURL: "/hd",  //所有的请求都会 带上 /api
+    baseURL: "http://47.115.17.150:2020",  //所有的请求都会 带上 /api
     "Content-Type": "application/x-www-form-urlencoded",
     "content-type": "application/json",
 
@@ -13,7 +13,8 @@ var service = axios.create({
 service.interceptors.request.use((config) => {
     // if (sessionStorage.getItem("token")) {
     //     config.headers["token"] = sessionStorage.getItem("token");
-    // }//登录完后再次访问要在请求头带上token
+    // }
+    //登录完后再次访问要在请求头带上token
 
 
     return config;

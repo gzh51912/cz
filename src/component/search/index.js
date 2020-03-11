@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import "../../iconfont.css"
+import "@/iconfont.css"
 import "./search.scss"
 
 export default class Search extends Component {

@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 // import axios from "axios"
 // import "./home.scss"
 // 引入搜索框、轮播图
-import Search from "../search"
-import Lb from "../lb"
+import Search from "@/component/search/index.js"
+import Lb from "@/component/lb/index.js"
 import HomeBox from "@/component/homebox/index.js"
 import HomeList from "@/component/homelist/index.js"
 

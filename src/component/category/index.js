@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import "./category.scss"
 // 引入搜索
-import Search from "../search"
+import Search from "@/component/search"
 import Banner from "./banner"
 import Second from "./second"
 export default class Category extends Component {

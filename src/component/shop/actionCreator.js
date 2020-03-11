@@ -1,8 +1,15 @@
-import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL } from "./actionType"
+import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL, INSERT } from "./actionType"
 import { getCartList } from "@/api/request"
 
 
 export default {
+    //详情页用到
+    insertAction(listId, listItem, uid) {
+        return {
+            type: INSERT,
+            listId, listItem, uid
+        }
+    },
     //增加
     addAction(index) {
         // console.log(index)

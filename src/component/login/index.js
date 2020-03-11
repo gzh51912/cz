@@ -6,7 +6,6 @@ import { Toast } from 'antd-mobile';
 import { checkPhone, login, reg } from "@/api/request.js"
 import { withRouter } from 'react-router-dom';
 
-
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -308,10 +307,33 @@ class Login extends Component {
             phone: false,//判断手机号码正则是否通过
             password: false,//判断密码正则是否通过
             xz: "",
+            code1: []
 
 
         }
+
+
     }
+    componentDidMount() {
+        this.GetVerifiCode();
+
+    }
+
+    GetVerifiCode = () => {
+        this.setState({
+            code1: this.genRandomString(4)
+        });
+    }
+    genRandomString = len => {
+        const text = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        const rdmIndex = text => Math.random() * text.length | 0;
+        let rdmString = '';
+        for (; rdmString.length < len; rdmString += text.charAt(rdmIndex(text)));
+        console.log(rdmString);
+        return rdmString;
+    }
+
+
     qh = () => {//切换短信密码验证和手机号验证。
         this.setState({
             visible: !this.state.visible,
@@ -354,8 +376,9 @@ class Login extends Component {
         let { code, visible, phone, password } = this.state;
         let uid = "";
         let users = "";
+        // console.log(this.refs.yzm.value)
         //短信验证应先查询该号码
-        if (visible === true && phone === true) {
+        if (visible === true && phone === true && this.refs.yzm.value === this.state.code1) {
             // login()
             let loginPhone = code + this.refs.phone.value
             checkPhone(loginPhone).then((res) => {
@@ -380,14 +403,16 @@ class Login extends Component {
                     })
                 }
 
-                if (this.props.location.state != undefined) {
-                    this.props.history.push(this.props.location.state.pathname)
-                } else if (sessionStorage.getItem("path")) {
-                    this.props.history.push(sessionStorage.getItem("path"))
-                }
-                else {
-                    this.props.history.push("/")
-                }
+                setTimeout(() => {
+                    if (this.props.location.state != undefined) {
+                        this.props.history.push(this.props.location.state.pathname)
+                    } else if (sessionStorage.getItem("path")) {
+                        this.props.history.push(sessionStorage.getItem("path"))
+                    }
+                    else {
+                        this.props.history.push("/")
+                    }
+                }, 300);
 
 
 
@@ -423,7 +448,7 @@ class Login extends Component {
                             console.log(this.props.history.goBack())
                             this.props.history.push("/")
                         }
-                    }, 500);
+                    }, 300);
                 }
 
             })
@@ -437,6 +462,8 @@ class Login extends Component {
         })
     }
     render() {
+
+
         // console.log(this.props)
         let { countries, country, code, visible, visible2 } = this.state;
         return (
@@ -464,9 +491,9 @@ class Login extends Component {
                         <li className="verification" style={{ display: visible ? "block" : "none" }}>
                             <div className="input invalid">
                                 <label htmlFor="verification" className="placeholder"></label>
-                                <input type="text" name="verification" className="ng-pristine" placeholder="短信验证码" />
+                                <input type="text" name="verification" className="ng-pristine" placeholder="请输入右方的验证码" ref="yzm" />
                             </div>
-                            <div className="btn btn-default disabled" ><a role="button" >获取验证码</a></div>
+                            <div className="btn btn-default disabled" ><a role="button" onClick={this.GetVerifiCode}>{this.state.code1}</a></div>
                         </li>
                         {/* 账号密码登录 */}
                         <li className="password" style={{ display: visible ? "none" : "block" }}>

@@ -43,13 +43,7 @@ class Detail extends Component {
             gl: index//改变高亮
         })
     }
-    shouldComponentUpdate(nextprops, nextstate) {//是否更新
-        if (this.props.cart !== nextprops.cart || this.state !== nextstate) {
-            return true
-        } else {
-            return false
-        }
-    }
+
     componentDidMount() {
         let id = sessionStorage.getItem("tzId");
         fetch(`https://shopapi.smartisan.com/product/skus?ids=${id}&with_stock=true&with_spu=true`).then((res) => res.json()).then((res) => {
@@ -73,7 +67,9 @@ class Detail extends Component {
                 if (res.msg === "添加成功") {
                     if (e.target.innerText === "加入购物车") {
                         Toast.info('添加成功', 1);
-                        window.location.href = "/detail"
+                        //获取那件商品的数据
+                        let listItem = store.getState().list.list.filter((item) => item.listId == sessionStorage.getItem("listId"));
+                        this.props.insertAction(sessionStorage.getItem("listId"), listItem, sessionStorage.getItem("uid"));
                     } else {
                         this.props.history.push("/shop");
                     }

@@ -10,6 +10,7 @@ import EditState from './editState'
 import FinishState from './finishState'
 import { clear, del } from "@/api/request.js"
 import HOC from "@/component/hoc/index.js"
+// import store from "@/store/index.js"
 
 let mapState = (state) => {
     return {
@@ -72,14 +73,10 @@ class Shop extends Component {
     delete = (e) => {
         // 删一条删多条全删
         e.persist();
-
-
         if (e.target.innerText === "删除所选") {
-
             let result = this.props.list.every((item) => {
                 return item.checked == true;//全部勾选即全删
             });
-            console.log(result)
             //result为true 全删
             if (result === true) {
                 clear(sessionStorage.getItem("uid")).then((res) => {
@@ -92,18 +89,18 @@ class Shop extends Component {
                 let resultA = []
                 this.props.list.forEach((item, index) => {
                     if (item.checked == true) {
+                        // 用数组去装这个索引
+                        resultA.push(item.listId)
                         del(item.listId, item.uid).then((res) => {
-                            console.log(res)
+                            // console.log(res)
                             if (res.msg === "删除成功") {
-                                this.props.deleteAction(index);
-
+                                this.props.deleteAction(resultA);
                             }
                         })
                     }
+                    console.log(resultA)
                 })
             }
-            window.location.href = "/shop"
-
         }
     }
     render() {

@@ -1,12 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-// import Login from "@/component/login/index.js"
-// import NoCart from "@/component/shop/index.js"
-// import { connect } from "react-redux"
-// import actionCreator from "@/component/shop/actionCreator.js"
 
-// let mapState = (state) => state
-// connect(mapState, actionCreator);
 
 var HOC = (Com) => {
     return class extends React.Component {

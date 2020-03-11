@@ -1,10 +1,10 @@
-import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL } from "./actionType"
+import { ADD, DELETE, CHECK, CLEAR, REDUCER, CHECKED, CHECKALL, INSERT } from "./actionType"
 
 const initialState = {
     list: [],
 }
 
-export default (state = initialState, { type, list, index, trorfa }) => {
+export default (state = initialState, { type, list, index, trorfa, listId, listItem, uid }) => {
     switch (type) {
         //查询 购物车得数据
         case CHECK:
@@ -44,10 +44,30 @@ export default (state = initialState, { type, list, index, trorfa }) => {
             var newState = JSON.parse(JSON.stringify(state));
             newState.list.data = [];
             return newState;
-        //删除一条
+        //删除一条或者多条
         case DELETE:
             var newState = JSON.parse(JSON.stringify(state));
-            newState.list.data.splice(index, 1);
+            // console.log(index);//index是个数组装的是listID
+            if (index.length === 1) {
+                newState.list.data = newState.list.data.filter((item) => item.listId !== index[0]);
+            }
+            else {
+                index.forEach((itm) => {
+                    newState.list.data = newState.list.data.filter((item) => item.listId !== itm);
+                })
+            }
+            return newState;
+        case INSERT:
+            var newState = JSON.parse(JSON.stringify(state));
+            let target = newState.list.data.findIndex((item, index, arr) => {
+                return item.listId == listId
+            })
+            // console.log(target);
+            if (target != -1) {
+                newState.list.data[target].num += 1
+            } else {
+                newState.list.data.push({ ...listItem, uid: uid, num: 1, checked: false })
+            }
             return newState;
         default:
             return state
