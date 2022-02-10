@@ -16,7 +16,7 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lib-flexible": "^0.3.2",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "postcss-loader": "^3.0.0",
     "postcss-px2rem": "^0.3.0",
     "pubsub-js": "^1.8.0",
